@@ -19,3 +19,8 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(username=username.data).first()
         if user:
             raise ValidationError('Username already taken. Please create a new username.')
+    def validate_email(self, email):
+    
+        user = User.query.filter_by(email=email.data).first()
+        if user:
+            raise ValidationError('email already taken. Please create a new email.')
