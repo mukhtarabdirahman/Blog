@@ -5,7 +5,7 @@
  </header>
 
  {% for post in posts.items %}
-<article class="media content-section">
+<article class="media content-section container">
   <img
     class="rounded-circle article-img"
     src="{{ url_for('static', filename='dp/' + post.author.image_file) }}"
