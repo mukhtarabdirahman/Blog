@@ -3,8 +3,8 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskblog import app, db, bcrypt
-from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
-from flaskblog.models import User, Post
+from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, CommentForm
+from flaskblog.models import User, Post, Comment
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -102,11 +102,18 @@ def new_post():
                            form=form, legend='New Post')
 
 
-@app.route("/post/<int:post_id>")
+@app.route("/post/<int:post_id>",  methods=['GET', 'POST'])
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title=post.title, post=post)
-
+    comments = Comment.query.all()
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(content=form.content.data, author=current_user)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comment has been created!', 'success')
+        return redirect(url_for('home'))
+    return render_template('post.html', post=post, form=form, comments=comments)
 
 @app.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
