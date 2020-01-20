@@ -3,7 +3,12 @@
   <h1>BLOG</h1>
   <h2>FOR DREAMERS AND MAKERS IN NAIROBI</h2>
  </header>
-
+ <blockquote class="quote-card blue-card container mt-3 text-center">
+    <p><h1>{{quote.author}}</h1></p>
+    <cite>
+      <p><h1>{{quote.quote}}</h1></p>
+    </cite>
+  </blockquote>
  {% for post in posts.items %}
 <article class="media content-section container">
   <img

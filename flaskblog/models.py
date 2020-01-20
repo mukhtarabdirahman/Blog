@@ -36,3 +36,7 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     def __repr__(self):
         return f"Comment('{self.date_posted}')"
+class Quote:
+    def __init__ (self,author,quote):
+        self.author = author
+        self.quote = quote
